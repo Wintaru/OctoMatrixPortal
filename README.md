@@ -53,7 +53,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src=./images/image0.jpeg alt="product image" width="600" />
+<img src=./images/demo.gif alt="product image" width="600" />
 
 I wanted a way to monitor my printer in the other room at a glance and the Adafruit Matrix Portal is a great way to do just that!
 
