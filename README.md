@@ -54,20 +54,17 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![Product Name Screen Shot](./images/image0.jpeg)
+<img src=./images/image0.jpeg alt="product image" width="600" />
 
-Here's a blank template to get started:
-**To avoid retyping too much info. Do a search and replace with your text editor for the following:**
-`Wintaru`, `OctoMatrixPortal`, `wintaru`, `joshua.j.donner@gmail.com`, `OctoMatrixPortal`, `An Octoprint monitor using the Adafruit Matrix Portal display.`
-
+I wanted a way to monitor my printer in the other room at a glance and the Adafruit Matrix Portal is a great way to do just that!
 
 ### Built With
 
-* []()
-* []()
-* []()
+* [Adafruit Matrix Portal Starter Kit](https://www.adafruit.com/product/4812)
+* [Octoprint](https://octoprint.org/)
+* [DisplayLayerProgress Octoprint Plugin](https://github.com/OllisGit/OctoPrint-DisplayLayerProgress)
 
-
+There are myriad guides for getting Octoprint going, I run mine on a RaspberryPI 3, and the DisplayLayerProgress plugin is easy to find an enable once you have your octoprint instance going.
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -76,76 +73,59 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+* A running instance of OctoPi connected to your printer
+* The DisplayLayerProgress plugin installed and enabled
 
 ### Installation
 
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Wintaru/OctoMatrixPortal.git
-   ```
-2. Install NPM packages
-   ```sh
-   npm install
-   ```
+1. Connect your MatrixPortal to your computer, you may need to perform additional steps to get it ready for use (see [Adafruit's wonderful guides](https://learn.adafruit.com/adabox016)).
+2. Copy code.py to your `CIRCUITPYTHON` drive
+3. Set up your secrets.py
 
+#### Secrets
 
+Aside from the usual things that your MatrixPortal will need in the secrets file (ssid, password, timezone), you will also need two additional settings.
+
+* octopi_host
+    * This is the IP address of your OctoPi (http://octopi.local will not work).
+
+* octopi_api_key
+    * This is a key you need to get, it is in your OctoPi's settings under API, Global API Key.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+There are a few different configurations you can make:
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+### ETA
 
+The ETA defaults to being shown as the expected time of completion in 12h format. If you set `USE_TWELVE_HOUR_FORMAT` to false it will display using 24h format. If you set `SHOW_ETA_AS_TIME` to false it will instead show you how many Days/Hours/Minutes are left until the print is expected to be done. Note that these are estimates and will change as the print goes on.
 
+### Display Colors
+
+There are 3 variables that let you change the display colors: `TOP_ROW_COLOR`, `MID_ROW_COLOR` and `BOT_ROW_COLOR`. Also included are helper color variables for standard web colors.
 
 <!-- ROADMAP -->
 ## Roadmap
 
 See the [open issues](https://github.com/Wintaru/OctoMatrixPortal/issues) for a list of proposed features (and known issues).
 
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
 <!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
-
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@wintaru](https://twitter.com/wintaru) - joshua.j.donner@gmail.com
+Josh Donner - [@wintaru](https://twitter.com/wintaru) - joshua.j.donner@gmail.com
 
 Project Link: [https://github.com/Wintaru/OctoMatrixPortal](https://github.com/Wintaru/OctoMatrixPortal)
 
 
 
 <!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
+<!-- ## Acknowledgements -->
 
 
 
