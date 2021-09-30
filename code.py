@@ -4,6 +4,30 @@ import board
 import terminalio
 from adafruit_matrixportal.matrixportal import MatrixPortal
 
+# UI Configuration
+SHOW_ETA_AS_TIME = True
+USE_TWELVE_HOUR_FORMAT = True
+
+# Standard Colors
+WHITE = 0xFFFFFF
+GRAY = 0x808080
+RED = 0xFF0000
+MAROON = 0x800000
+YELLOW = 0xFFFF00
+OLIVE = 0x808000
+LIME = 0x00FF00
+GREEN = 0x008000
+AQUA = 0x00FFFF
+TEAL = 0x008080
+BLUE = 0x0000FF
+NAVY = 0x000080
+FUCHSIA = 0xFF00FF
+PURPLE = 0x800080
+
+TOP_ROW_COLOR = BLUE
+MID_ROW_COLOR = RED
+BOT_ROW_COLOR = GREEN
+
 try:
     from secrets import secrets
 except ImportError:
@@ -33,7 +57,7 @@ PROGRESS_WIDTH = 10
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(1, 6),
-    text_color=0x0000FF,
+    text_color=TOP_ROW_COLOR,
     scrolling=True,
 )
 
@@ -41,14 +65,14 @@ matrixportal.add_text(
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(1, 16),
-    text_color=0xFF0000,
+    text_color=MID_ROW_COLOR,
 )
 
-# idx = 2 (Progress bar that shows progress in a different way)
+# idx = 2 (Progress percentage and Layer information)
 matrixportal.add_text(
     text_font=terminalio.FONT,
     text_position=(1, 26),
-    text_color=0x00FF00,
+    text_color=BOT_ROW_COLOR,
 )
 
 # Show them we're doing something while the wifi fails to connect once
@@ -74,19 +98,39 @@ class TimeStruct:
 # Makes TimeStruct something that can be displayed
 def ConvertTimeStructToDisplayString(time_left):
 
-    tl_str = ""
+    tl_str = "" 
 
     if time_left.days > 0:
         tl_str += str(time_left.days) + "D "
     if time_left.hours > 0:
         tl_str += str(time_left.hours) + "H "
-    if time_left.minutes > 0:
-        tl_str += str(time_left.minutes) + "M "
+    if time_left.minutes > 0 and time_left.days == 0:
+        tl_str += str(time_left.minutes) + "M"
+
+    tl_str += " Left"
     # Optionally display seconds as well, but it feels unuseful.
     # if time_left.seconds > 0 and time_left.minutes == 0:
     #     tl_str += str(time_left.seconds) + "S "
 
     return tl_str
+
+def CalculateEndTimeAsString(time_left):
+    et_str = ""
+
+    matrixportal.get_local_time()
+    d1 = time.localtime(time.time() + time_left)
+
+    if USE_TWELVE_HOUR_FORMAT:
+        m_or_a = "A"
+        hour = d1.tm_hour
+        if hour > 12:
+            hour -= 12
+            m_or_a = "P"
+        et_str = '{0:d}:{1:02d}'.format(hour, d1.tm_min) + m_or_a
+    else:
+        et_str = '{0:d}:{1:02d}'.format(d1.tm_hour, d1.tm_min)
+
+    return et_str
 
 # Creates a progress bar for the bottom "row"
 def CreateProgressBar(progress):
@@ -130,14 +174,17 @@ while True:
                 print_left_str = "Calculating"
                 if pt_left:
                     time_left = TimeStruct(pt_left)
-                    print_left_str = ConvertTimeStructToDisplayString(time_left)
+                    if SHOW_ETA_AS_TIME:
+                        print_left_str = "ETA: " + CalculateEndTimeAsString(pt_left)
+                    else:
+                        print_left_str = ConvertTimeStructToDisplayString(time_left)
 
                 # prepare the strings for display and create progress bar
                 now_printing_str = "Now Printing: " + job_info['job']['file']['name']
                 progress_bar = str((int)(job_info['progress']['completion'])) + "%"
-                cur_layer = (int)(layer_info['layer']['current'])
-                tot_layer = (int)(layer_info['layer']['total'])
-                progress_bar += " " + str(cur_layer) + "/" + str(tot_layer)
+                cur_layer = layer_info['layer']['current']
+                tot_layer = layer_info['layer']['total']
+                progress_bar += " " + cur_layer + "/" + tot_layer
 
             refresh_time = time.monotonic()
 
