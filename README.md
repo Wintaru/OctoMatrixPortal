@@ -10,7 +10,7 @@
   <p align="center">
     An Octoprint monitor using the Adafruit Matrix Portal display.
     <br />
-    <a href="https://github.com/Wintaru/OctoMatrixPortal"><strong>Explore the docs »</strong></a>
+    <!-- <a href="https://github.com/Wintaru/OctoMatrixPortal"><strong>Explore the docs »</strong></a>->>
     <br />
     <br />
     <a href="https://github.com/Wintaru/OctoMatrixPortal">View Demo</a>
