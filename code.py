@@ -175,7 +175,7 @@ while True:
                 if pt_left:
                     time_left = TimeStruct(pt_left)
                     if SHOW_ETA_AS_TIME:
-                        print_left_str = "ETA: " + CalculateEndTimeAsString(pt_left)
+                        print_left_str = "ETA-" + CalculateEndTimeAsString(pt_left)
                     else:
                         print_left_str = ConvertTimeStructToDisplayString(time_left)
 
