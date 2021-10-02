@@ -127,6 +127,8 @@ def CalculateEndTimeAsString(time_left):
             if hour > 12:
                 hour -= 12
             m_or_a = "P"
+        if hour == 0:
+            hour = 12
         et_str = '{0:d}:{1:02d}'.format(hour, d1.tm_min) + m_or_a
     else:
         et_str = '{0:d}:{1:02d}'.format(d1.tm_hour, d1.tm_min)
